@@ -57,40 +57,53 @@ def main():
 
 
     for t in range(T):
+        #
         for i in range(len(rides)):
-            podroz = rides[i]
-            #najpierw przydziel
-            for j in range(len(vehicles)):
-                pojazd = vehicles[j]
-                if(pojazd['status'] == 0):
-                    pojazd['status'] = 1
-                    pojazd['x2'] = podroz['a']
-                    pojazd['y2'] = podroz['b']
-                    podroz['status'] = 1
-                    pojazd['podroze'].append(i)
-                    break
+            if rides[i]['status'] == 0:
+                podroz = rides[i]
+                #najpierw przydziel
+                for j in range(len(vehicles)):
+                    pojazd = vehicles[j]
+                    if(pojazd['status'] == 0):
+                        pojazd['status'] = 1
+                        pojazd['x2'] = podroz['a']
+                        pojazd['y2'] = podroz['b']
+                        podroz['status'] = 1
+                        pojazd['podroze'].append(i)
+                        break
         #potem przesun pojazdy
         for pojazd in vehicles:
-            if pojazd['x1'] < pojazd['x2']:
-                pojazd['x1'] += 1
-            elif pojazd['x1'] > pojazd['x2']:
-                pojazd['x1'] -= 1
-            else:
-                if pojazd['y1'] < pojazd['y2']:
-                    pojazd['y1'] += 1
-                elif pojazd['y1'] > pojazd['y2']:
-                    pojazd['y1'] -= 1
+            if pojazd['status'] != 0:
+                if pojazd['x1'] < pojazd['x2']:
+                    pojazd['x1'] += 1
+                elif pojazd['x1'] > pojazd['x2']:
+                    pojazd['x1'] -= 1
                 else:
-                    #dojechal do celu
-                    if pojazd['status'] == 1:
-                        #dojechal do klienta
-                        indexPodrozy = pojazd['podroze'][-1]
-                        podroz = rides[indexPodrozy]
-                        pojazd['x2'] = podroz['x']
-                        pojazd['y2'] = podroz['y']
-                    elif pojazd['status'] == 2:
-                        print("siema")
-                        # sukces!!!
+                    if pojazd['y1'] < pojazd['y2']:
+                        pojazd['y1'] += 1
+                    elif pojazd['y1'] > pojazd['y2']:
+                        pojazd['y1'] -= 1
+                    else:
+                        #dojechal do celu
+                        if pojazd['status'] == 1:
+                            #dojechal do klienta
+                            indexPodrozy = pojazd['podroze'][-1]
+                            podroz = rides[indexPodrozy]
+                            pojazd['x2'] = podroz['x']
+                            pojazd['y2'] = podroz['y']
+                            pojazd['status'] = 2
+                        elif pojazd['status'] == 2:
+                            print("siema")
+                            # sukces!!!
+
+                            pojazd['status'] = 0    #zwalniam pojazd
+                            podroz['status'] = 2    #podroz zakonczona
+                            #TODO printowanie na zewnatrz
+
+
+
+    print(vehicles)
+
 
 
 
