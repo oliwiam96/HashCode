@@ -36,9 +36,9 @@ def main():
         else:
             line = line.strip('\n')
             row = line.split(' ')
-            rides.append([])
-            for elem in row:
-                rides[i-1].append(int(elem))
+            rides.append({'a': row[0], 'b': row[1], 'x': row[2], 'y': row[3],'s': row[4], 'f': row[5]})
+            #for elem in row:
+            #    rides[i-1].append(int(elem))
 
 
         i += 1
