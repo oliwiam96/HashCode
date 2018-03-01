@@ -3,15 +3,11 @@ import scipy
 import numpy
 
 
-def openReadableFile(nazwa):
-    f = open(nazwa, "r")
-    return f
 
 def main():
     i = 0
     readfile = open("a_example.in", "r")
     metadane = []
-    miasto = []
     R=0
     C=0
     F=0
@@ -22,7 +18,6 @@ def main():
     for line in readfile:
         print(line)
         if i == 0:
-            metadane = line
             metadane = line.strip('\n')
             metadane = metadane.split(' ')
             R = int(metadane[0])
@@ -32,23 +27,14 @@ def main():
             B = int(metadane[4])
             T = int(metadane[5])
 
-
         else:
             line = line.strip('\n')
             row = line.split(' ')
             rides.append({'a': row[0], 'b': row[1], 'x': row[2], 'y': row[3],'s': row[4], 'f': row[5]})
-            #for elem in row:
-            #    rides[i-1].append(int(elem))
-
-
         i += 1
-
-    #print(metadane)
-    #print(miasto)
+    print(str(R))
     print(rides)
-
-
-
+    readfile.close()
 
 
 
