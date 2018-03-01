@@ -78,12 +78,10 @@ def main():
         #potem przesun pojazdy
 
         for pojazd in vehicles:
-            indexPodrozy = pojazd['podroze'][-1]
-            podroz = rides[indexPodrozy]
             if pojazd['status'] == 0:
                 continue
             elif pojazd['status'] == 1:
-                print("Jade do klienta")
+                print("Jade")
                 if pojazd['x1'] < pojazd['x2']:
                     pojazd['x1'] += 1
                 elif pojazd['x1'] > pojazd['x2']:
@@ -97,32 +95,31 @@ def main():
                     else:
                         #(x1, y1) == (x2, y2)
                         #dojechal do klienta
+                        indexPodrozy = pojazd['podroze'][-1]
+                        podroz = rides[indexPodrozy]
                         pojazd['status'] = 2
                         podroz['status'] = 2
                         pojazd['x2'] = podroz['x']
                         pojazd['y2'] = podroz['y']
             else: #pojazd['status'] == 2
-                #czekaj na eraliest time i potem jedz
-                if t >= podroz["s"]:
-                    print("Jade z klientem")
-                    if pojazd['x1'] < pojazd['x2']:
-                        pojazd['x1'] += 1
-                    elif pojazd['x1'] > pojazd['x2']:
-                        pojazd['x1'] -= 1
+                if pojazd['x1'] < pojazd['x2']:
+                    pojazd['x1'] += 1
+                elif pojazd['x1'] > pojazd['x2']:
+                    pojazd['x1'] -= 1
+                else:
+                    # x1 == x2
+                    if pojazd['y1'] < pojazd['y2']:
+                        pojazd['y1'] += 1
+                    elif pojazd['y1'] > pojazd['y2']:
+                        pojazd['y1'] -= 1
                     else:
-                        # x1 == x2
-                        if pojazd['y1'] < pojazd['y2']:
-                            pojazd['y1'] += 1
-                        elif pojazd['y1'] > pojazd['y2']:
-                            pojazd['y1'] -= 1
-                        else:
-                            #(x1, y1) == (x2, y2)
-                            #dojechal do celu
-                            pojazd['status'] = 0    #zwalniam pojazd
-                            #print("Blad!!!" + str(pojazd['status']) + "a drugi ", vehicles[0]['status'], " ", vehicles[1]['status'])
-                            podroz['status'] = 3    #podroz zakonczona
-                else:   #czekaj na earliest time
-                    continue
+                        #(x1, y1) == (x2, y2)
+                        #dojechal do celu
+                        indexPodrozy = pojazd['podroze'][-1]
+                        podroz = rides[indexPodrozy]
+                        pojazd['status'] = 0    #zwalniam pojazd
+                        #print("Blad!!!" + str(pojazd['status']) + "a drugi ", vehicles[0]['status'], " ", vehicles[1]['status'])
+                        podroz['status'] = 3    #podroz zakonczona
 
 
 
@@ -132,9 +129,6 @@ def main():
     print(vehicles)
     print("TRASY KONIEC:")
     print(rides)
-
-
-
 
 
     Output = ""

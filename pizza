@@ -15,3 +15,36 @@ for line in file.readlines():
     print(line)
 #for line in file:
 #    print(line)
+
+
+            if pojazd['status'] != 0:
+                if pojazd['x1'] < pojazd['x2']:
+                    pojazd['x1'] += 1
+                elif pojazd['x1'] > pojazd['x2']:
+                    pojazd['x1'] -= 1
+                else:
+                    # x1 == x2
+                    if pojazd['y1'] < pojazd['y2']:
+                        pojazd['y1'] += 1
+                    elif pojazd['y1'] > pojazd['y2']:
+                        pojazd['y1'] -= 1
+                    else:
+                        #(x1, y1) == (x2, y2)
+                        #dojechal do celu
+                        print("JESTEM U CELU, MOJ STATUS" + str(pojazd['status']))
+                        if pojazd['status'] == 1:
+                            #dojechal do klienta
+                            indexPodrozy = pojazd['podroze'][-1]
+                            podroz = rides[indexPodrozy]
+                            pojazd['x2'] = podroz['x']
+                            pojazd['y2'] = podroz['y']
+                            pojazd['status'] = 2
+                            print("ERROR " + str(podroz['status']))
+                            podroz['status'] = 1
+                        elif pojazd['status'] == 2:
+                            print("DOJECHALEM DO CELU")
+                            # sukces!!!
+
+                            pojazd['status'] = 0    #zwalniam pojazd
+                            podroz['status'] = 2    #podroz zakonczona
+                            #TODO printowanie na zewnatrz
