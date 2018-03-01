@@ -18,11 +18,12 @@ def main():
     N=0
     B=0
     T=0
-
+    rides = []
     for line in readfile:
         print(line)
         if i == 0:
             metadane = line
+            metadane = line.strip('\n')
             metadane = metadane.split(' ')
             R = int(metadane[0])
             C = int(metadane[1])
@@ -35,15 +36,19 @@ def main():
         else:
             line = line.strip('\n')
             row = line.split(' ')
-            print(row)
+            rides.append([])
+            for elem in row:
+                rides[i-1].append(int(elem))
 
 
         i += 1
 
-    print(metadane)
+    #print(metadane)
     #print(miasto)
+    print(rides)
 
-    print("Hello world")
+
+
 
 
 
